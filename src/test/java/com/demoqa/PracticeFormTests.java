@@ -20,12 +20,12 @@ public class PracticeFormTests {
     static void beforeAll() {
         Configuration.pageLoadStrategy = "eager";
         Configuration.baseUrl = "https://demoqa.com";
+        Configuration.browserSize = "1920x1080";
     }
 
     @BeforeEach
     void setUp() {
         open("/automation-practice-form");
-        WebDriverRunner.getWebDriver().manage().window().maximize();
         executeJavaScript("$('#fixedban').remove()");
         executeJavaScript("$('footer').remove()");
     }
@@ -44,7 +44,7 @@ public class PracticeFormTests {
         $(".react-datepicker__day--030:not(.react-datepicker__day--outside-month)").click();
         $("#subjectsInput").setValue("Hindi").pressEnter();
         $("#hobbiesWrapper").$(byText("Reading")).click();
-        $("#uploadPicture").uploadFile(new File("src/test/resources/files/jpg/test.jpg"));
+        $("#uploadPicture").uploadFromClasspath("files/jpg/test.jpg");
         $("#currentAddress").setValue("Лукоморье, Дуб Зеленый, 1");
         $("#state").click();
         $("#stateCity-wrapper").$(byText("NCR")).click();
@@ -63,8 +63,5 @@ public class PracticeFormTests {
         $(".table-responsive").$(byText("Picture")).sibling(0).shouldHave(text("test.jpg"));
         $(".table-responsive").$(byText("Address")).sibling(0).shouldHave(text("Лукоморье, Дуб Зеленый, 1"));
         $(".table-responsive").$(byText("State and City")).sibling(0).shouldHave(text("NCR Delhi"));
-        $("#closeLargeModal").click();
-
-
     }
 }
